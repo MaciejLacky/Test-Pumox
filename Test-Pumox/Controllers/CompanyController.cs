@@ -38,6 +38,7 @@ namespace Test_Pumox.Controllers
 
         [HttpPost]
         [Route("company/create")]
+        [BasicAuthentication]
         public ActionResult Create([FromBody] CreateCompanyDto dtoCompany)
         {
             var idCompany = _companyService.Create(dtoCompany);
@@ -47,6 +48,7 @@ namespace Test_Pumox.Controllers
 
         [HttpPost]
         [Route("company/search")]
+        [BasicAuthentication]
         public ActionResult Search([FromBody] SearchCompanyDto dtoCompany)
         {
             var result = _companyService.Search(dtoCompany);
@@ -62,7 +64,8 @@ namespace Test_Pumox.Controllers
             return Ok("Zaktualizowano poprawnie dane");
         }
 
-        [HttpDelete("company/delete/{id}")]        
+        [HttpDelete("company/delete/{id}")]
+        [BasicAuthentication]
         public ActionResult Delete([FromRoute] long id)
         {
             var success = _companyService.Delete(id);

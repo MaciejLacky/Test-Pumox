@@ -25,8 +25,8 @@ namespace Test_Pumox.Authentication
                 string decodedAuthenticationToken = Encoding.UTF8.GetString(Convert.FromBase64String(authenticationToken));
                 string[] usernamePasswordArray = decodedAuthenticationToken.Split(':');
                 string userName = usernamePasswordArray[0];
-                string password = usernamePasswordArray[1];
-                if (UserValidate.Login(userName, password))
+                string password = usernamePasswordArray[1];    
+                if (UserValidate.Login(userName, password))  
                 {
                     Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(userName), null);
                 }
