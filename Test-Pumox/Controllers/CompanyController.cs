@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -11,8 +12,7 @@ using Test_Pumox.Models;
 using Test_Pumox.Services;
 
 namespace Test_Pumox.Controllers
-{
-    
+{    
     [ApiController]   
     public class CompanyController : ControllerBase
     {        
@@ -23,22 +23,17 @@ namespace Test_Pumox.Controllers
         {
             _companyService = companyService;
         }
-        
-        [HttpGet("company")]
-        [BasicAuthentication]
+        [Authorize]
+        [HttpGet("company")]       
         public ActionResult<IEnumerable<Company>> GetAll()
         {
-            //string userName =  Thread.CurrentPrincipal.Identity.Name;
-            //if (string.IsNullOrEmpty(userName)) return Unauthorized("niepoprawny login lub hasło użytkownika");
-
             var companies = _companyService.GetAll();
             if (companies.Count == 0) return NotFound("Brak danych");
             return Ok(companies);
         }
-
+        [Authorize]
         [HttpPost]
-        [Route("company/create")]
-        [BasicAuthentication]
+        [Route("company/create")]        
         public ActionResult Create([FromBody] CreateCompanyDto dtoCompany)
         {
             var idCompany = _companyService.Create(dtoCompany);
@@ -47,15 +42,14 @@ namespace Test_Pumox.Controllers
         }
 
         [HttpPost]
-        [Route("company/search")]
-        [BasicAuthentication]
+        [Route("company/search")]       
         public ActionResult Search([FromBody] SearchCompanyDto dtoCompany)
         {
             var result = _companyService.Search(dtoCompany);
             if (result.Count() == 0) return NotFound("Nie znaleziono firm o wprowadzonych kryteriach");
             return Ok(result);
         }
-
+        [Authorize]
         [HttpPut("company/update/{id}")]
         public ActionResult Update([FromRoute] long id, [FromBody] CreateCompanyDto dtoCompany)
         {
@@ -63,9 +57,8 @@ namespace Test_Pumox.Controllers
             if (!idCompany) return BadRequest("Błąd aktualizacji. Sprawdź poprawność danych");
             return Ok("Zaktualizowano poprawnie dane");
         }
-
-        [HttpDelete("company/delete/{id}")]
-        [BasicAuthentication]
+        [Authorize]
+        [HttpDelete("company/delete/{id}")]      
         public ActionResult Delete([FromRoute] long id)
         {
             var success = _companyService.Delete(id);

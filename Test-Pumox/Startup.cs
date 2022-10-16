@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Test_Pumox.Authentication;
 using Test_Pumox.Entities;
 using Test_Pumox.Services;
 
@@ -29,6 +31,9 @@ namespace Test_Pumox
         public void ConfigureServices(IServiceCollection services)
         {            
             services.AddControllers();
+            services.AddAuthentication("BasicAuthentication")
+         .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+            services.AddScoped<IUserServices, UserServices>();
             services.AddDbContext<Test_PumoxDbContext>();
             services.AddScoped<CompanyService>();
         }
@@ -42,7 +47,7 @@ namespace Test_Pumox
             }
 
             app.UseHttpsRedirection();
-
+            app.UseAuthentication();
             app.UseRouting();            
             app.UseAuthorization();
 
