@@ -16,8 +16,8 @@ namespace Test_Pumox.Controllers
     [ApiController]   
     public class CompanyController : ControllerBase
     {        
-        private readonly CompanyService _companyService;
-      
+
+        private readonly ICompanyService _companyService;
 
         public CompanyController(CompanyService companyService)
         {

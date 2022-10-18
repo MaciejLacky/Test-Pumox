@@ -8,7 +8,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Test_Pumox.Services
 {
-    public class CompanyService
+    public class CompanyService : ICompanyService
     {
         private readonly Test_PumoxDbContext _dbContext;
 

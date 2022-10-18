@@ -34,6 +34,7 @@ namespace Test_Pumox
             services.AddAuthentication("BasicAuthentication")
          .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
             services.AddScoped<IUserServices, UserServices>();
+            services.AddScoped<ICompanyService, CompanyService>();
             services.AddDbContext<Test_PumoxDbContext>();
             services.AddScoped<CompanyService>();
         }

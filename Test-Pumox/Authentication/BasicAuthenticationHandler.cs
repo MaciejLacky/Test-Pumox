@@ -33,7 +33,7 @@ namespace Test_Pumox.Authentication
             if (endpoint?.Metadata?.GetMetadata<IAllowAnonymous>() != null)
                 return AuthenticateResult.NoResult();
             if (!Request.Headers.ContainsKey("Authorization"))
-                return AuthenticateResult.Fail("Nipoprawny format nagłówka autoryzacji");
+                return AuthenticateResult.Fail("Niepoprawny format nagłówka autoryzacji");
             User user = null;
             try
             {
